@@ -1,0 +1,755 @@
+Q1 . 
+
+from pymongo import MongoClient
+
+# Connect to the MongoDB server
+client = MongoClient('mongodb://localhost:27017/')
+
+# Access the database
+db = client['mydatabase']
+
+# Create a collection named "Book"
+collection = db['Book']
+
+# Create fields for the collection
+book_fields = {
+    "Book-name": "",
+    "Book-code": "",
+    "Book-Author": "",
+    "Book-Price": 0,
+    "Book-publication-year": ""
+}
+
+# Create the collection with specified fields
+collection.insert_one(book_fields)
+
+# Insert 5 documents into the collection
+books = [
+    {
+        "Book-name": "AIT",
+        "Book-code": "B001",
+        "Book-Author": "Author 1",
+        "Book-Price": 900,
+        "Book-publication-year": "2020"
+    },
+    {
+        "Book-name": "ADBMS",
+        "Book-code": "B002",
+        "Book-Author": "Author 2",
+        "Book-Price": 400,
+        "Book-publication-year": "2018"
+    },
+    {
+        "Book-name": "OT",
+        "Book-code": "B003",
+        "Book-Author": "Author 3",
+        "Book-Price": 900,
+        "Book-publication-year": "2022"
+    },
+    {
+        "Book-name": "SPM",
+        "Book-code": "B004",
+        "Book-Author": "Author 4",
+        "Book-Price": 600,
+        "Book-publication-year": "2019"
+    },
+    {
+        "Book-name": "Python programming",
+        "Book-code": "B005",
+        "Book-Author": "Author 5",
+        "Book-Price": 750,
+        "Book-publication-year": "2021"
+    }
+]
+
+collection.insert_many(books)
+
+# Find the books whose price is between 500 and 800
+query = {"Book-Price": {"$gte": 500, "$lte": 800}}
+projection = {"_id": 0}  # Exclude the "_id" field
+result = collection.find(query, projection)
+
+print("Books with price between 500 and 800:")
+for book in result:
+    print(book)
+
+# Update the price of the book "Python programming" to 1000
+filter_query = {"Book-name": "Python programming"}
+update_query = {"$set": {"Book-Price": 1000}}
+collection.update_one(filter_query, update_query)
+
+# Display all books in the order of publication year
+projection = {"_id": 0}  # Exclude the "_id" field
+result = collection.find({}, projection).sort("Book-publication-year")
+
+print("Books in the order of publication year:")
+for book in result:
+    print(book)
+
+---------------------------------------------------------------------------------------------------
+
+Q2.
+
+from pymongo import MongoClient
+
+# Connect to the MongoDB server
+client = MongoClient('mongodb://localhost:27017/')
+
+# Access the database
+db = client['mydatabase']
+
+# Create a collection named "restaurants"
+collection = db['restaurants']
+
+# Insert sample data into the collection
+restaurants_data = [
+    {
+        "restaurant_id": 1,
+        "name": "Navmi",
+        "establishment_year": 2010,
+        "cuisine": "Italian",
+        "score": 85
+    },
+    {
+        "restaurant_id": 2,
+        "name": "Kesar",
+        "establishment_year": 2012,
+        "cuisine": "Chinese",
+        "score": 95
+    },
+    {
+        "restaurant_id": 3,
+        "name": "Amarai",
+        "establishment_year": 2015,
+        "cuisine": "Mexican",
+        "score": 92
+    },
+    {
+        "restaurant_id": 4,
+        "name": "Orchid",
+        "establishment_year": 2019,
+        "cuisine": "Indian",
+        "score": 88
+    },
+    {
+        "restaurant_id": 5,
+        "name": "Emrald",
+        "establishment_year": 2021,
+        "cuisine": "Japanese",
+        "score": 91
+    }
+]
+
+collection.insert_many(restaurants_data)
+
+# Query: Display all documents in the collection "restaurants"
+projection = {"_id": 0}  # Exclude the "_id" field
+result = collection.find({}, projection)
+print("All documents in the 'restaurants' collection:")
+for doc in result:
+    print(doc)
+
+# Query: Display specific fields for all documents in the collection "restaurants"
+projection = {"_id": 0, "restaurant_id": 1, "name": 1, "establishment_year": 1, "cuisine": 1}
+result = collection.find({}, projection)
+print("\nFields restaurant_id, name, establishment_year, and cuisine for all documents:")
+for doc in result:
+    print(doc)
+
+# Query: Find restaurants with a score more than 90
+query = {"score": {"$gt": 90}}
+result = collection.find(query, projection)
+print("\nRestaurants with a score more than 90:")
+for doc in result:
+    print(doc)
+
+# Query: Arrange the names of restaurants in ascending order
+result = collection.find({}, projection).sort("name", 1)
+print("\nRestaurants sorted by name in ascending order:")
+for doc in result:
+    print(doc)
+
+# Query: Update restaurant score for the establishment year 2019
+filter_query = {"establishment_year": 2019}
+update_query = {"$set": {"score": 95}}
+collection.update_many(filter_query, update_query)
+
+print("\nUpdated restaurant score for the establishment year 2019.")
+
+# Verify the updated scores
+projection = {"_id": 0, "restaurant_id": 1, "name": 1, "establishment_year": 1, "cuisine": 1, "score": 1}
+result = collection.find(filter_query, projection)
+print("Restaurants with the establishment year 2019 and their updated scores:")
+for doc in result:
+    print(doc)
+
+----------------------------------------------------------------------------------------------------------------
+
+Q3.
+
+from pymongo import MongoClient
+
+# Connect to the MongoDB server
+client = MongoClient('mongodb://localhost:27017/')
+
+# Access the database
+db = client['mydatabase']
+
+# Create a collection named "movies"
+collection = db['movies']
+
+# Insert sample data into the collection
+movies_data = [
+    {
+        "title": "Coolie No. 1",
+        "writer": "David Dhawan",
+        "year": 1995,
+        "actors": ["Govinda", "Karishma Kapoor"],
+        "director": "David Dhawan"
+    },
+    {
+        "title": "Mela",
+        "writer": "Dharmesh Darshan",
+        "year": 2000,
+        "actors": ["Aamir Khan", "Twinkle Khanna"],
+        "director": "Raj Kapoor"
+    },
+    {
+        "title": "Jalwa",
+        "writer": "Pankaj Parashar",
+        "year": 1987,
+        "actors": ["Amitabh Bachchan", "Naseeruddin Shah"],
+        "director": "Pankaj Parashar"
+    },
+    {
+        "title": "Piku",
+        "writer": "Shoojit Sircar",
+        "year": 2015,
+        "actors": ["Amitabh Bachchan", "Irfan Khan"],
+        "director": "Shoojit Sircar"
+    },
+    {
+        "title": "Sanak",
+        "writer": "Kanishk Varma",
+        "year": 2022,
+        "actors": ["Vidyut Jammwal", "Rukmini Maitra"],
+        "director": "Raj Kapoor"
+    }
+]
+
+collection.insert_many(movies_data)
+
+# Query: Get all documents
+projection = {"_id": 0}  # Exclude the "_id" field
+result = collection.find({}, projection)
+print("All documents in the 'movies' collection:")
+for doc in result:
+    print(doc)
+
+# Query: Get all documents with director set to "Raj Kapoor"
+query = {"director": "Raj Kapoor"}
+result = collection.find(query, projection)
+print("\nDocuments with director set to 'Raj Kapoor':")
+for doc in result:
+    print(doc)
+
+# Query: Get all documents where actors include "Amitabh Bachchan"
+query = {"actors": "Amitabh Bachchan"}
+result = collection.find(query, projection)
+print("\nDocuments where actors include 'Amitabh Bachchan':")
+for doc in result:
+    print(doc)
+
+# Query: Get all movies released in the 90s
+query = {"year": {"$gte": 1990, "$lte": 1999}}
+result = collection.find(query, projection)
+print("\nMovies released in the 90s:")
+for doc in result:
+    print(doc)
+
+# Query: Get all movies released before the year 2000 or after 2010
+query = {"$or": [{"year": {"$lt": 2000}}, {"year": {"$gt": 2010}}]}
+result = collection.find(query, projection)
+print("\nMovies released before the year 2000 or after 2010:")
+for doc in result:
+    print(doc)
+
+# Query: Update some documents by adding extra fields
+filter_query = {"title": "Saaho"}
+update_query = {"$set": {"genre": "Drama", "rating": 4.5}}
+collection.update_many(filter_query, update_query)
+
+# Query: Delete movie "Movie E"
+delete_query = {"title": "Sanak"}
+collection.delete_one(delete_query)
+
+print("\nUpdated documents with extra fields and deleted movie 'Movie Sanak'.")
+
+------------------------------------------------------------------------------------------------------------
+
+Q4.
+
+import numpy as np
+
+# Define the date range as the month of July 2023
+start_date = np.datetime64('2023-07-01')
+end_date = np.datetime64('2023-07-31')
+
+# Find the first Sunday in July 2023
+first_sunday = np.busday_offset(start_date, 0, roll='forward', weekmask='Sun')
+
+print("The first Sunday in July 2023:", first_sunday)
+
+-------------------------------------------------------------------------------------------------------------
+
+Q5.
+
+import numpy as np
+
+# i) Create an array containing multiples of 2 till 200
+array_multiples_of_2 = np.arange(2, 201, 2)
+print("Array of multiples of 2 till 200:")
+print(array_multiples_of_2)
+
+# ii) Find the number of occurrences of a sequence in a NumPy array
+sequence = np.array([2, 4, 6])
+occurrences = np.count_nonzero(np.correlate(array_multiples_of_2, sequence, mode='valid'))
+print("\nNumber of occurrences of the sequence [2, 4, 6]:", occurrences)
+
+# iii) Count the number of elements along a given axis
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+elements_count = np.size(matrix, axis=None)
+print("\nNumber of elements in the matrix:", elements_count)
+
+# iv) Create an identity matrix
+identity_matrix = np.eye(3)
+print("\nIdentity matrix:")
+print(identity_matrix)
+
+# v) Create a 2*2 matrix and find its transpose
+matrix_2x2 = np.array([[1, 2], [3, 4]])
+transpose_matrix = np.transpose(matrix_2x2)
+print("\nOriginal matrix:")
+print(matrix_2x2)
+print("\nTranspose of the matrix:")
+print(transpose_matrix)
+
+# vi) Create two matrices and find the multiplication of matrices
+matrix_A = np.array([[1, 2], [3, 4]])
+matrix_B = np.array([[5, 6], [7, 8]])
+matrix_product = np.dot(matrix_A, matrix_B)
+print("\nMatrix A:")
+print(matrix_A)
+print("\nMatrix B:")
+print(matrix_B)
+print("\nMatrix product of A and B:")
+print(matrix_product)
+
+---------------------------------------------------------------------------------------------------------------------
+
+Q6.
+
+import numpy as np
+
+# i) Find the k smallest values of a NumPy array
+arr = np.array([9, 3, 5, 1, 8, 2, 6, 4, 7])
+k = 3
+k_smallest_values = np.partition(arr, k-1)[:k]
+print("The", k, "smallest values:", k_smallest_values)
+
+# ii) Compute the nth percentile of the NumPy array
+arr = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9])
+n = 75
+nth_percentile = np.percentile(arr, n)
+print("The", n, "percentile:", nth_percentile)
+
+# iii) Calculate the sum of all columns in a 2D NumPy array
+matrix = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+column_sums = np.sum(matrix, axis=0)
+print("Sum of columns:", column_sums)
+
+# iv) Calculate average values of two given NumPy arrays
+arr1 = np.array([1, 2, 3, 4, 5])
+arr2 = np.array([6, 7, 8, 9, 10])
+average_arr1 = np.average(arr1)
+average_arr2 = np.average(arr2)
+print("Average of arr1:", average_arr1)
+print("Average of arr2:", average_arr2)
+
+# v) Find Mean and Median of a List of NumPy Arrays
+arr_list = [np.array([1, 2, 3]), np.array([4, 5, 6]), np.array([7, 8, 9])]
+mean_values = np.mean(arr_list, axis=0)
+median_values = np.median(arr_list, axis=0)
+print("Mean values:", mean_values)
+print("Median values:", median_values)
+
+--------------------------------------------------------------------------------------------------------------------
+
+Q7.
+
+import numpy as np
+
+# i) Create a 5x2 integer array from a range between 100 to 200 such that the difference between each element is 10
+array_5x2 = np.arange(100, 200, 10).reshape(5, 2)
+print("5x2 array:")
+print(array_5x2)
+
+# ii) Return array of odd rows and even columns from the given numpy array
+sample_array = np.array([[3, 6, 9, 12], [15, 18, 21, 24], [27, 30, 33, 36], [39, 42, 45, 48], [51, 54, 57, 60]])
+odd_rows_even_cols = sample_array[::2, 1::2]
+print("\nArray of odd rows and even columns:")
+print(odd_rows_even_cols)
+
+---------------------------------------------------------------------------------------------------------------------
+
+Q8.
+
+import numpy as np
+
+def get_number_of_days(year, month):
+    start_date = np.datetime64(f'{year}-{month:02d}')
+    end_date = start_date + np.timedelta64(1, 'M') - np.timedelta64(1, 'D')
+    return int((end_date - start_date) / np.timedelta64(1, 'D')) + 1
+
+year = int(input("Enter the year: "))
+month = int(input("Enter the month (1-12): "))
+
+number_of_days = get_number_of_days(year, month)
+print("Number of days in the given month and year:", number_of_days)
+
+----------------------------------------------------------------------------------------------------------------------
+
+Q9.
+
+import numpy as np
+
+def get_time_difference(start_date, end_date):
+    time_difference = np.timedelta64(end_date - start_date, 's')
+    days = time_difference.astype('timedelta64[D]')
+    hours = (time_difference.astype('timedelta64[h]') % np.timedelta64(1, 'D')).astype(int)
+    minutes = (time_difference.astype('timedelta64[m]') % np.timedelta64(1, 'h')).astype(int)
+    seconds = (time_difference.astype('timedelta64[s]') % np.timedelta64(1, 'm')).astype(int)
+    return days, hours, minutes, seconds
+
+start_date = np.datetime64('2023-06-01')
+end_date = np.datetime64('2023-06-09 12:30:00')
+
+days, hours, minutes, seconds = get_time_difference(start_date, end_date)
+print("Time difference: {} days, {} hours, {} minutes, {} seconds".format(days, hours, minutes, seconds))
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Q10.
+
+import numpy as np
+
+date_string = "2022-06-10 12:30:00"
+
+datetime_obj = np.datetime64(date_string)
+
+print("Datetime object:", datetime_obj)
+
+------------------------------------------------------------------------------------------------------------------------
+
+Q11.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# a) Loading data from CSV file
+data = pd.read_csv("Iris2.csv")
+
+# b) Compute the basic statistics of given data
+shape = data.shape
+num_columns = len(data.columns)
+mean = data.mean(numeric_only=True, skipna=True)
+
+print("Shape:", shape)
+print("Number of columns:", num_columns)
+print("Mean:\n", mean)
+
+# c) Splitting a data frame on values of categorical variables
+species_groups = data.groupby("Species")
+
+for species, group in species_groups:
+    print("\nSpecies:", species)
+    print(group)
+
+# d) Visualize data using Scatter plot
+colors = {"setosa": "red", "versicolor": "green", "virginica": "blue"}
+
+for species, group in species_groups:
+    plt.scatter(group["SepalLengthCm"], group["SepalWidthCm"], c=colors[species], label=species)
+
+plt.xlabel("Sepal Length (cm)")
+plt.ylabel("Sepal Width (cm)")
+plt.legend()
+plt.title("Scatter plot of Iris dataset")
+plt.show()
+
+-----------------------------------------------------------------------------------------------------------------------
+
+Q13.
+
+import pandas as pd
+
+# Sample DataFrame
+data = pd.DataFrame({
+    'A': [1, 2, 3, None, None],
+    'B': [4, None, 6, None, 8],
+    'C': [None, None, None, None, None],
+    'D': [10, 20, None, 40, None],
+})
+
+# a. Drop rows where all elements are missing
+data_dropped_all = data.dropna(how='all')
+print("DataFrame after dropping rows where all elements are missing:")
+print(data_dropped_all)
+print()
+
+# b. Drop rows where specific columns have missing values
+columns_with_missing = ['B', 'D']
+data_dropped_specific = data.dropna(subset=columns_with_missing)
+print("DataFrame after dropping rows where columns {} have missing values:".format(columns_with_missing))
+print(data_dropped_specific)
+print()
+
+# c. Keep the valid entries (non-missing values)
+data_valid_entries = data.dropna()
+print("DataFrame with only valid entries (non-missing values):")
+print(data_valid_entries)
+print()
+
+# d. Replace NaNs with a single constant value in specified columns
+constant_value = 0
+columns_to_replace = ['A', 'C']
+data_constant_replaced = data.copy()
+data_constant_replaced[columns_to_replace] = data_constant_replaced[columns_to_replace].fillna(constant_value)
+print("DataFrame after replacing NaNs with constant value {} in columns {}:".format(constant_value, columns_to_replace))
+print(data_constant_replaced)
+print()
+
+# e. Replace NaNs with median or mean of specified columns
+columns_to_fill = ['A', 'B', 'D']
+data_median_filled = data.copy()
+data_mean_filled = data.copy()
+data_median_filled[columns_to_fill] = data_median_filled[columns_to_fill].fillna(data_median_filled[columns_to_fill].median())
+data_mean_filled[columns_to_fill] = data_mean_filled[columns_to_fill].fillna(data_mean_filled[columns_to_fill].mean())
+print("DataFrame after replacing NaNs with median in columns {}:".format(columns_to_fill))
+print(data_median_filled)
+print()
+print("DataFrame after replacing NaNs with mean in columns {}:".format(columns_to_fill))
+print(data_mean_filled)
+print()
+
+# f. Count the number of missing values in a specific column
+column_to_count = 'C'
+missing_count = data[column_to_count].isnull().sum()
+print("Number of missing values in column '{}': {}".format(column_to_count, missing_count))
+print()
+
+# g. Replace missing values with most frequent values in each column
+data_most_frequent_replaced = data.copy()
+most_frequent_values = data_most_frequent_replaced.mode().iloc[0]
+data_most_frequent_replaced = data_most_frequent_replaced.fillna(most_frequent_values)
+print("DataFrame after replacing missing values with most frequent values in each column:")
+print(data_most_frequent_replaced)
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Q14.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+data = pd.read_csv("bollywood.csv")
+
+# a) Number of records and metadata information
+num_records = len(data)
+print("Number of records in the dataset:", num_records)
+print("\nMetadata information:")
+print(data.info())
+
+# b) Number of movies released in each genre
+genre_counts = data['Genre'].value_counts()
+print("\nNumber of movies released in each genre:")
+print(genre_counts)
+print("\nGenre with the highest number of releases:", genre_counts.idxmax())
+print("\nNumber of releases in each genre (descending order):")
+print(genre_counts.sort_values(ascending=False))
+
+# c) Cross tabulation of genre and release time
+genre_release_time_crosstab = pd.crosstab(data['Genre'], data['ReleaseTime'])
+print("\nNumber of movies in each genre released at different times:")
+print(genre_release_time_crosstab)
+
+# d) Month with the maximum number of movie releases
+data['ReleaseDate'] = pd.to_datetime(data['ReleaseDate'])
+data['Month'] = data['ReleaseDate'].dt.month
+month_counts = data['Month'].value_counts()
+max_month = month_counts.idxmax()
+print("\nMonth with the maximum number of movie releases:", max_month)
+
+# e) Top 10 movies with maximum return on investment (ROI)
+data['ROI'] = (data['BoxOfficeCollection'] - data['Budget']) / data['Budget']
+top_10_movies_roi = data.nlargest(10, 'ROI')
+print("\nTop 10 movies with maximum ROI:")
+print(top_10_movies_roi[['MovieName', 'ROI']])
+
+# f) Average ROI for different release times
+avg_roi_by_release_time = data.groupby('ReleaseTime')['ROI'].mean()
+print("\nAverage ROI for different release times:")
+print(avg_roi_by_release_time)
+
+# g) Histogram and distribution plot of movie budget
+plt.figure(figsize=(10, 6))
+sns.histplot(data['Budget'], bins=20, kde=True)
+plt.xlabel('Budget')
+plt.ylabel('Count')
+plt.title('Distribution of Movie Budget')
+plt.show()
+
+# h) Boxplots of youtube likes by genre
+plt.figure(figsize=(10, 6))
+sns.boxplot(data=data, x='Genre', y='YoutubeLikes')
+plt.xlabel('Genre')
+plt.ylabel('Youtube Likes')
+plt.title('Youtube Likes by Genre')
+plt.xticks(rotation=45)
+plt.show()
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q15.
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# a. Read Total profit of all months and show it using a line plot
+data = pd.read_csv('company_sales_data.csv')
+months = data['month_number']
+profit = data['total_profit']
+plt.plot(months, profit)
+plt.xlabel('Month Number')
+plt.ylabel('Total Profit')
+plt.title('Total Profit of All Months')
+plt.show()
+
+# b. Get total profit of all months and show line plot with style properties
+plt.plot(months, profit, linestyle='dotted', color='red', marker='o', markerfacecolor='red', linewidth=3)
+plt.xlabel('Month Number')
+plt.ylabel('Sold units number')
+plt.title('Total Profit of All Months')
+plt.legend(['Total Profit'], loc='lower right')
+plt.show()
+
+# c. Read all product sales data and show it using a multiline plot
+products = data.columns[1:-1]  # Exclude 'month_number' and 'total_profit' columns
+for product in products:
+    plt.plot(months, data[product])
+plt.xlabel('Month Number')
+plt.ylabel('Sold units number')
+plt.title('Product Sales Data')
+plt.legend(products)
+plt.show()
+
+# d. Read toothpaste sales data of each month and show it using a scatter plot
+toothpaste_sales = data['toothpaste']
+plt.scatter(months, toothpaste_sales)
+plt.xlabel('Month Number')
+plt.ylabel('Toothpaste Sales')
+plt.title('Toothpaste Sales Data')
+plt.show()
+
+# e. Read face cream and facewash product sales data and show it using a bar chart
+face_cream_sales = data['facecream']
+facewash_sales = data['facewash']
+plt.bar(months, face_cream_sales, label='Face Cream')
+plt.bar(months, facewash_sales, label='Facewash', alpha=0.7)
+plt.xlabel('Month Number')
+plt.ylabel('Sold units number')
+plt.title('Face Cream and Facewash Sales Data')
+plt.legend()
+plt.show()
+
+# f. Calculate total sale data for last year for each product and show it using a Pie chart
+last_year_data = data[data['month_number'] > 8]
+total_sales = last_year_data[products].sum()
+plt.pie(total_sales, labels=products, autopct='%1.1f%%')
+plt.title('Total Sales for Last Year')
+plt.show()
+
+# g. Read Bathing soap & facewash of all months and display it using the Subplot
+bathing_soap_sales = data['bathingsoap']
+facewash_sales = data['facewash']
+fig, (ax1, ax2) = plt.subplots(2, 1, sharex=True)
+ax1.plot(months, bathing_soap_sales, color='blue')
+ax1.set_ylabel('Bathing Soap Sales')
+ax1.set_title('Bathing Soap and Facewash Sales Data')
+ax2.plot(months, facewash_sales, color='green')
+ax2.set_xlabel('Month Number')
+ax2.set_ylabel('Facewash Sales')
+plt.show()
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q12.
+
+# import pandas as pd
+
+# # Loading data from CSV file
+# data = pd.read_csv("Iris.csv")
+
+# # Display the number of missing values in each column
+# print("Number of missing values:\n", data.isnull().sum())
+
+# # Fill missing values with mean for numerical columns
+# data_filled_mean = data.select_dtypes(include='number').fillna(data.mean())
+
+# # Fill missing values with mode for categorical columns
+# data_filled_mode = data.select_dtypes(include='object').fillna(data.mode().iloc[0])
+
+# # Combine the filled numerical and categorical columns
+# data_filled = pd.concat([data_filled_mean, data_filled_mode], axis=1)
+
+# # Display the updated data
+# print("\nData with missing values filled:\n", data_filled)
+
+import pandas as pd
+
+# Read the Iris.csv file into a DataFrame
+df = pd.read_csv('Iris.csv')
+
+# Display the DataFrame before handling missing data
+print("DataFrame before handling missing data:")
+print(df.head())
+
+# Handling missing data using fillna() method
+# Filling missing values with mean
+df_filled_mean = df.fillna(df.mean())
+
+# Filling missing values with median
+df_filled_median = df.fillna(df.median())
+
+# Filling missing values with mode
+df_filled_mode = df.fillna(df.mode().iloc[0])
+
+# Handling missing data using dropna() method
+df_dropped = df.dropna()
+
+# Display the DataFrame after handling missing data
+print("\nDataFrame after filling missing values with mean:")
+print(df_filled_mean.head())
+
+print("\nDataFrame after filling missing values with median:")
+print(df_filled_median.head())
+
+print("\nDataFrame after filling missing values with mode:")
+print(df_filled_mode.head())
+
+print("\nDataFrame after dropping rows with missing values:")
+print(df_dropped.head())
+
+

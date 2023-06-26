@@ -1,0 +1,353 @@
+1.Write script to demonstrate superglobals (predefined variable) in PHP.
+<html>
+<body>
+<h1>Superglobals Demo</h1>
+
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <label for="name">Enter your name:</label>
+    <input type="text" id="name" name="name">
+    <button type="submit">Submit</button>
+</form>
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = $_POST['name'];
+
+    echo '<h2>Welcome, ' . $name . '!</h2>';
+    echo '<p>Your name was submitted using the $_POST superglobal.</p>';
+}
+?>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------
+2.Write PHP script to demonstrate Indexed Arrays in PHP.
+<?php
+
+$cars = array("Volvo", "BMW", "Toyota");
+echo "I like " . $cars[0] . ", " . $cars[1] . " and " . $cars[2] . ".<br>";
+
+$cars[] = "Honda";
+echo "I also like " . $cars[3] . ".<br>";
+
+$length = count($cars);
+echo "The array has " . $length . " elements.<br>";
+
+foreach ($cars as $car) 
+{
+    echo $car . "<br>";
+}
+
+?>
+
+------------------------------------------------------------------------------------------------------------------------------
+3.Write PHP script to demonstrate Associative Arrays in PHP.
+<?php
+
+$person = array("name" => "John", "age" => 30);
+echo "The person's name is " . $person["name"] . " and they are " . $person["age"] . " years old.<br>";
+
+$person["age"] = 31;
+echo "The person's name is " . $person["name"] . " and they are " . $person["age"] . " years old.<br>";
+
+$length = count($person);
+echo "The array has " . $length . " elements.<br>";
+
+foreach ($person as $key => $value) 
+{
+    echo $key . ": " . $value . "<br>";
+}
+
+?>
+
+------------------------------------------------------------------------------------------------------------------------------
+4.Write PHP script to demonstrate Multidimensional Arrays in PHP.
+<?php
+
+$cars = array(array("Volvo", 2018) , array("BMW", 2019) , array("Toyota", 2020) );
+
+echo "I have the following cars:<br>";
+foreach ($cars as $car) 
+{
+    echo $car[0] . ", " . $car[1] . "<br>";
+}
+
+$length = count($cars);
+echo "I have " . $length . " cars.<br>";
+
+foreach ($cars as $car) 
+{
+    echo $car[0] . " is a " . $car[1] . " model.<br>";
+}
+
+?>
+
+------------------------------------------------------------------------------------------------------------------------------
+5.Write PHP script to demonstrate sort function Arrays in PHP.
+<?php
+
+$numbers = array(50, 100, 20, 1, 400);
+
+sort($numbers);
+echo "The array in ascending order is:<br>";
+foreach ($numbers as $number) 
+{
+    echo $number . "<br>";
+}
+
+rsort($numbers);
+echo "The array in descending order is:<br>";
+foreach ($numbers as $number) 
+{
+    echo $number . "<br>";
+}
+
+?>
+
+------------------------------------------------------------------------------------------------------------------------------
+6.Write PHP script to find leap year.
+<?php
+function isLeapYear($year) 
+{
+    if (($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0) 
+    {
+        return true;
+    } 
+    else 
+    {
+        return false;
+    }
+}
+
+$year = 2024;
+
+if (isLeapYear($year)) 
+{
+    echo $year . " is a leap year.";
+} 
+else 
+{
+    echo $year . " is not a leap year.";
+}
+?>
+
+------------------------------------------------------------------------------------------------------------------------------
+7.Program to play audio with controls attribute for your web page.
+<html>
+<body>
+
+<p>This is Sample Audio.</p>
+
+<audio controls>
+<source src="audio.mp3" type="audio/mpeg">
+</audio>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------
+8.Program to play video with autoplay attribute for your web page.
+<html>
+<body>
+
+<p>This is Sample Video.</p>
+
+<video autoplay controls>
+<source src="video.mp4" type="video/mp4">
+</video>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------
+9.Program to design form using following HTML5 semantics tags. 1.<progress> 2. <main> 3. <mark> 4. <time> 5. <article>  
+<html>
+<body>
+    <main>
+        <h1>Simple Form</h1>
+        <article>
+            <form action="#" method="POST">
+                <p>
+                    <label>Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </p>
+                <p>
+                    <label>Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </p>
+                <p>
+                    <label>Password:</label>
+                    <input type="password" id="pass" name="pass" required>
+                </p>
+                <p>
+                    <label>Progress:</label>
+                    <progress id="progress" value="40" max="100"></progress>
+                </p>
+                <p>
+                    <label>Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </p>
+                <p>
+                    <label>Time:</label>
+                    <input type="time" id="date" name="date" required>
+                </p>
+                <p>
+                    <input type="submit" value="Submit">
+                </p>
+            </form>
+        </article>
+    </main>
+
+    <mark>This form is designed using HTML5 semantic tags.</mark>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------                                                                                                                                                                                                                                                                                   
+10.Draw a text with strokeText() and draw linear gradient using Canvas.
+<html>
+<body>
+
+<canvas id="myCanvas" width="600" height="150" style="border:1px solid #d3d3d3;"> </canvas>
+
+<script>
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+ctx.font = "40px Arial";
+ctx.strokeText("HTML5", 10, 50);
+ctx.font = "30px Verdana";
+
+var gradient = ctx.createLinearGradient(0, 0, c.width, 0);
+gradient.addColorStop("0", "magenta");
+gradient.addColorStop("0.5", "blue");
+gradient.addColorStop("1.0", "red");
+
+ctx.strokeStyle = gradient;
+ctx.strokeText("HyperText Markup Language Version 5", 10, 90);
+</script>
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------
+11.Draw rectangle, rounded rectangle, circle, star using SVG graphics.
+<html>
+<body>
+    <svg width="400" height="400">
+        <rect x="50" y="50" width="100" height="80" fill="blue" stroke="black" />
+
+        <rect x="200" y="50" rx="10" ry="10" width="100" height="80" fill="red" stroke="black"/>
+
+        <circle cx="150" cy="200" r="50" fill="green" stroke="black" />
+
+        <polygon points="300,200 320,250 370,250 330,280 350,330 300,300 250,330 270,280 230,250 280,250" fill="orange" stroke="black"/>
+    </svg>
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------
+12.Program to implement HTML5 drag and drop feature.
+<html>
+<head>
+<style>
+#div1 {
+  width: 300px;
+  height: 300px;
+  padding: 10px;
+  border: 1px solid #aaaaaa;
+}
+</style>
+<script>
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  ev.target.appendChild(document.getElementById(data));
+}
+</script>
+</head>
+<body>
+
+<div id="div1" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+<img id="drag1" src="download.png" draggable="true" ondragstart="drag(event)" width="290" height="290">
+
+</body>
+</html>
+
+------------------------------------------------------------------------------------------------------------------------------
+13.Design Employee registration form using HTML5 tags and use input type- text, radio, date, checkbox, 
+number, range, color, email, search, url, tel, submit.
+<html>
+<body>
+    <h1>Employee Registration Form</h1>
+
+    <form action="#" method="POST">
+        <p>
+            <label>Name:</label>
+            <input type="text" id="name" name="name" required>
+        </p>
+        <p>
+            <label>Gender:</label>
+            <input type="radio" id="male" name="gender" value="male" required>
+            <label>Male</label>
+            <input type="radio" id="female" name="gender" value="female" required>
+            <label>Female</label>
+        </p>
+        <p>
+            <label>Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required>
+        </p>
+        <p>
+            <label>Skills:</label>
+            <input type="checkbox" id="html" name="skills" value="html">
+            <label>HTML</label>
+            <input type="checkbox" id="css" name="skills" value="css">
+            <label>CSS</label>
+            <input type="checkbox" id="javascript" name="skills" value="javascript">
+            <label>JavaScript</label>
+        </p>
+        <p>
+            <label>Experience (in years):</label>
+            <input type="number" id="experience" name="experience" min="0" max="50" step="1" required>
+        </p>
+        <p>
+            <label>Salary:</label>
+            <input type="range" id="salary" name="salary" min="0" max="100000" step="1000">
+        </p>
+        <p>
+            <label>Favorite Color:</label>
+            <input type="color" id="color" name="color">
+        </p>
+        <p>
+            <label>Email:</label>
+            <input type="email" id="email" name="email" required>
+        </p>
+        <p>
+            <label>Search:</label>
+            <input type="search" id="search" name="search">
+        </p>
+        <p>
+            <label>Website:</label>
+            <input type="url" id="url" name="url">
+        </p>
+        <p>
+            <label>Phone Number:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}">
+            <small>Format: 123-456-7890</small>
+        </p>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+</body>
+</html>

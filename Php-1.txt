@@ -1,0 +1,238 @@
+            PHP Assingment-1
+
+Q.1(22)
+-----------------------
+<?php
+// Using echo statement
+echo "Hello, World!";
+
+// Using print statement
+print "Hello, World!";
+?>
+
+
+Q.2(23)
+------------------------------------
+<?php
+// Integer variable
+$age = 25;
+
+// String variable
+$name = "John Doe";
+
+// Floating-point variable
+$per = 89.99;
+
+// Boolean variable
+$isStudent = true;
+
+
+// Accessing and printing variable values
+echo "Age: " . $age . "\n";
+echo "Name: " . $name . "\n";
+echo "Percentage: " . $per . "\n";
+echo "Is Student: " . ($isStudent ? "Yes" : "No") . "\n";
+
+
+Q.3(24)
+-----------------------------------
+<?php
+// Global variable
+$globalVariable = 10;
+
+function myFunction() {
+    // Local variable
+    $localVariable = 20;
+
+    // Access global variable
+    global $globalVariable;
+    echo "Global variable: $globalVariable <br>";
+
+    // Access local variable
+    echo "Local variable: $localVariable <br>";
+
+    // Static variable
+    static $staticVariable = 30;
+    echo "Static variable: $staticVariable <br>";
+    $staticVariable++;
+}
+
+// Call the function multiple times
+myFunction();
+myFunction();
+myFunction();
+?>
+
+
+
+
+
+Q.4(25)
+------------------------------------
+<?php
+// Define constants
+define("PI", 3.14159);
+define("GREETING", "Hello, Vighnesh");
+
+// Access and output constants
+echo "The value of PI is: " . PI . "<br>";
+echo "The greeting is: " . GREETING . "<br>";
+?>
+
+
+Q.5(26)
+-----------------------------------------
+<?php
+// Define variables
+$variableName = "message";
+$message = "Vighnesh Jadhav";
+
+// Use $$ to access the value of $variableName as a variable name
+echo $$variableName;
+?>
+
+
+
+
+Q.6(27)
+-----------------------------------------------
+<?php
+// Arithmetic operators
+$a = 10;
+$b = 4;
+
+$sum = $a + $b;
+$diff = $a - $b;
+$prod = $a * $b;
+$quotient = $a / $b;
+$remainder = $a % $b;
+
+echo "Arithmetic Operators:<br>";
+echo "Sum: " . $sum . "<br>";
+echo "Difference: " . $diff . "<br>";
+echo "Product: " . $prod . "<br>";
+echo "Quotient: " . $quotient . "<br>";
+echo "Remainder: " . $remainder . "<br>";
+
+// Assignment operators
+$c = 5;
+
+$c += 2;
+echo "<br>Assignment Operators:<br>";
+echo "Add and Assign: " . $c . "<br>";
+
+$c -= 2;
+echo "Subtract and Assign: " . $c . "<br>";
+
+$c *= 2;
+echo "Multiply and Assign: " . $c . "<br>";
+
+$c /= 2;
+echo "Divide and Assign: " . $c . "<br>";
+
+$c %= 3;
+echo "Modulo and Assign: " . $c . "<br>";
+
+// Comparison operators
+$d = 10;
+$e = 5;
+
+echo "<br>Comparison Operators:<br>";
+echo "Equal to: " . ($d == $e ? "true" : "false") . "<br>";
+echo "Not Equal to: " . ($d != $e ? "true" : "false")."<br>";
+echo "Greater than: " . ($d > $e ? "true" : "false") . "<br>";
+echo "Less than: " . ($d < $e ? "true" : "false") . "<br>";
+echo "Greater than or equal to: " . ($d >= $e ? "true" : "false") . "<br>";
+echo "Less than or equal to: " . ($d <= $e ? "true" : "false") . "<br>";
+
+// Logical operators
+$bool1 = true;
+$bool2 = false;
+
+echo "<br>Logical Operators:<br>";
+echo "AND: " . ($bool1 && $bool2 ? "true" : "false") . "<br>";
+echo "OR: " . ($bool1 || $bool2 ? "true" : "false") . "<br>";
+echo "NOT: " . (!$bool1 ? "true" : "false") . "<br>";
+
+
+?>
+
+
+
+
+
+Q.7(28)
+----------------------------------------
+<?php
+// String length
+$str = "Hello, World!";
+$length = strlen($str);
+echo "Length of the string: $length <br>";
+
+// String concatenation
+$str1 = "Hello";
+$str2 = "World";
+$concatenated = $str1 . ", " . $str2;
+echo "Concatenated string: $concatenated <br>";
+
+// Substring extraction
+$substring = substr($str, 7, 5);
+echo "Substring: $substring <br>";
+
+// String to lowercase and uppercase
+$lowercase = strtolower($str);
+$uppercase = strtoupper($str);
+echo "Lowercase: $lowercase <br>";
+echo "Uppercase: $uppercase <br>";
+
+// String replacement
+$replaced = str_replace("World", "Vighnesh", $str);
+echo "Replaced string: $replaced <br>";
+
+// String trimming
+$trimmed = trim("   Hello   ");
+echo "Trimmed string: $trimmed <br>";
+
+// String searching
+$position = strpos($str, "World");
+echo "Position of 'World': $position <br>";
+
+// String counting
+$count = substr_count($str, "l");
+echo "Count of 'l': $count <br>";
+?>
+
+
+
+
+Q.8(30)
+----------------------------------
+<?php
+// String
+$string = "Hello, World!";
+echo "String: $string <br>";
+echo "Type: " . gettype($string) . "<br>";
+
+// Integer
+$integer = 42;
+echo "Integer: $integer <br>";
+echo "Type: " . gettype($integer) . "<br>";
+
+// Float
+$float = 3.14;
+echo "Float: $float <br>";
+echo "Type: " . gettype($float) . "<br>";
+
+// Boolean
+$boolean = true;
+echo "Boolean: " . var_export($boolean, true) . "<br>";
+echo "Type: " . gettype($boolean) . "<br>";
+
+
+// Null
+$nullValue = null;
+echo "Null: $nullValue <br>";
+echo "Type: " . gettype($nullValue) . "<br>";
+
+
+?>
