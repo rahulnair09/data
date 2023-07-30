@@ -10,6 +10,7 @@ import Expenses from './Components/Expenses/Expenses';
 import { useGlobalContext } from './context/globalContext';
 
 
+
 function App() {
   const [active, setActive] = useState(1)
 
@@ -37,15 +38,20 @@ function App() {
   },[])
 
   return (
+    <>
+    
+    
     <AppStyled bg={bg} className="App">
       {orbMemo}
       <MainLayout>
+       
         <Navigation active={active} setActive={setActive} />
         <main>
           {displayData()}
         </main>
       </MainLayout>
     </AppStyled>
+    </>
   );
 }
 

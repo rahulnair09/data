@@ -5,13 +5,24 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { GlobalStyle } from './styles/GlobalStyle';
 import { GlobalProvider } from './context/globalContext';
+import { Auth0Provider } from '@auth0/auth0-react';
+import { createRoot } from 'react-dom/client';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyle/>
     <GlobalProvider>
+    <Auth0Provider
+    domain="dev-xnkitzjeifbk60uc.us.auth0.com"
+    clientId="s1DmEHs3iF7UsoRINSBLdkNUqAN8jl15"
+    authorizationParams={{
+      redirect_uri: window.location.origin
+    }}
+  >
     <App />
+  </Auth0Provider>
+    
     </GlobalProvider>
    
   </React.StrictMode>
